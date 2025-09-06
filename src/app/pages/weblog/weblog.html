@@ -1,0 +1,91 @@
+<!-- App Shell -->
+<div class="h-screen flex flex-col bg-slate-950 text-slate-100 overflow-hidden">
+  <!-- Top Bar -->
+  <header
+    class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-950/70 bg-slate-950/95 border-b border-slate-800">
+    <div class="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between py-3 gap-4">
+        <div class="flex items-center gap-3">
+          <!-- Logo -->
+          <div class="h-8 w-8 rounded-md bg-emerald-500/10 ring-1 ring-emerald-400/40 grid place-items-center">
+            <svg viewBox="0 0 24 24" class="h-5 w-5 text-emerald-400">
+              <path fill="currentColor"
+                    d="M8.5 6L3 11.5l5.5 5.5 1.5-1.5L6 11.5l3.9-3.9L8.5 6zm7 0h-3v2h3v8h-3v2h3a2 2 0 002-2V8a2 2 0 00-2-2z"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-lg font-semibold tracking-tight">weblog</h1>
+            <p class="text-xs text-slate-400">SSH honeypot live feed</p>
+          </div>
+        </div>
+        <button class="bg-red-400 p-2 cursor-pointer" (click)="test()">Test</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Terminal Panel -->
+  <main class="flex-1 flex overflow-hidden">
+    <section class="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-6 flex flex-col flex-1 overflow-hidden">
+      <div class="flex flex-col flex-1 rounded-lg border border-slate-800 bg-slate-900/80 shadow-inner overflow-hidden">
+        <!-- Title bar -->
+        <div class="flex items-center justify-between px-3 py-2 border-b border-slate-800">
+          <div class="flex items-center gap-1.5">
+            <span class="h-3 w-3 rounded-full bg-rose-400/90"></span>
+            <span class="h-3 w-3 rounded-full bg-amber-300/90"></span>
+            <span class="h-3 w-3 rounded-full bg-emerald-400/90"></span>
+            <span class="ml-3 text-xs text-slate-400">tail -f /var/log/auth.log</span>
+          </div>
+          <div class="text-xs text-slate-500">UTC</div>
+        </div>
+
+        <!-- Log viewport -->
+        <div class="relative flex-1 flex flex-col overflow-y-auto [color-scheme:dark]">
+          <!-- Sticky header row -->
+          <div class="sticky -top-px z-10 bg-slate-900 px-3 pt-3 pb-2 text-md text-slate-500">
+            <div class="grid grid-cols-[209px_132px_55px_66px_165px_0.2fr_0.5fr] gap-6">
+              <span class="whitespace-nowrap text-center">Timestamp</span>
+              <span class="whitespace-nowrap text-center">Session</span>
+              <span class="whitespace-nowrap text-center">Server</span>
+              <span class="whitespace-nowrap text-center">Country</span>
+              <span class="whitespace-nowrap text-center">IP</span>
+              <span class="whitespace-nowrap">Username</span>
+              <span class="whitespace-nowrap">Password</span>
+            </div>
+          </div>
+
+          <!-- Log list -->
+          <ol
+            role="log"
+            aria-live="polite"
+            class="font-mono text-[13px] leading-[1.35] px-3 pb-4 pt-1 space-y-1.5"
+            id="weblog-scroll"
+          >
+            @for (entry of entries(); track $index) {
+              <li class="group rounded hover:bg-white/5">
+                <div class="grid grid-cols-[19ch_12ch_5ch_6ch_15ch_0.2fr_1fr] gap-6 text-xl">
+                  <span class="whitespace-nowrap text-slate-400">{{ entry.date | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                  <span class="whitespace-nowrap text-slate-400">{{ entry.session }}</span>
+                  <span class="whitespace-nowrap text-emerald-300">{{ entry.server }}</span>
+                  <span class="whitespace-nowrap text-slate-400 text-center">{{ entry.country }}</span>
+                  <span class="whitespace-nowrap text-yellow-300 text-center">{{ entry.ip }}</span>
+                  <span class="whitespace-nowrap text-slate-200">
+                    <om-typewriter [words]="[entry.username]" [disableLoop]="true" textCursorColor="#0C1327" [writeSpeed]="10"></om-typewriter>
+                  </span>
+                  <span class="whitespace-nowrap text-slate-200">
+                    <om-typewriter [words]="[entry.password]" [disableLoop]="true" textCursorColor="#0C1327" [writeSpeed]="10"></om-typewriter>
+                  </span>
+                </div>
+              </li>
+            }
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800">
+    <div class="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-4 text-center text-xs text-slate-500">
+      Impressum | Datenschutzerklärung
+    </div>
+  </footer>
+</div>
