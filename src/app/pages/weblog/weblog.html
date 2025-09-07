@@ -44,9 +44,9 @@
                 <div class="grid grid-cols-[19ch_12ch_5ch_6ch_15ch_0.2fr_0.5fr] gap-6 text-xl">
                   <span class="whitespace-nowrap text-slate-400">{{ entry.date | date:'yyyy-MM-dd HH:mm:ss' }}</span>
                   <span class="whitespace-nowrap text-slate-400">{{ entry.session }}</span>
-                  <span class="whitespace-nowrap text-emerald-300">{{ entry.server }}</span>
-                  <span class="whitespace-nowrap text-slate-400 text-center">{{ entry.country }}</span>
-                  <span class="whitespace-nowrap text-yellow-300 text-center">{{ entry.ip }}</span>
+                  <span class="whitespace-nowrap text-emerald-300">{{ entry.sensor }}</span>
+                  <span class="whitespace-nowrap text-slate-400 text-center">{{ entry.country || '-' }}</span>
+                  <span class="whitespace-nowrap text-yellow-300 text-center">{{ entry.src_ip }}</span>
                   <span class="whitespace-nowrap text-slate-200">
                     <om-typewriter [words]="[entry.username]" [disableLoop]="true" textCursorColor="#0C1327" [writeSpeed]="10"></om-typewriter>
                   </span>
