@@ -1,3 +1,3 @@
 export const environment = {
-  socketUrl: 'http://localhost:3001',
+  socketUrl: 'https://ws.ssh-honeypot.ericmarschner.de',
 };
