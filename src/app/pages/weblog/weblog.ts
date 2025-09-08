@@ -15,6 +15,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 export class Weblog {
   @ViewChild('weblogList', {static: false}) weblogScroll!: ElementRef;
 
+  connected = signal<boolean>(false);
   entries = signal<LoginEvent[]>([]);
 
   constructor(private socket: Socket) {
@@ -24,6 +25,14 @@ export class Weblog {
         this.scrollToBottom();
       })
     });
+
+    this.socket.on('connect', () => {
+      this.connected.set(true);
+    })
+
+    this.socket.on('disconnect', () => {
+      this.connected.set(false);
+    })
 
     // listen to new login attempts
     this.socket.fromEvent<LoginEvent>('login.failed')

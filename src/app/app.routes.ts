@@ -5,7 +5,7 @@ export const routes: Routes = [
   {
     path: '',
     component: Weblog,
-    title: 'SSH-Honeypot.de | Weblog'
+    title: 'SSH-Honeypot | Weblog'
   },
   {
     path: '**',
